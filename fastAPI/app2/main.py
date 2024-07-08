@@ -33,4 +33,57 @@ def home():
     }
     return response
 
+@app.post('/something/', tags=[Tags.mongodb])
+def postData(data: str, age: int):
+    user = {"name": data, "age": age}
+    
+    db = mongoClient['users']
+    col = db['users']
+    
+    result = col.insert_one(user)
+    
+    return {
+        'id': str(result.inserted_id),
+        'user' : {
+            'name' : data,
+            'age' : age
+        }
+    }
 
+@app.get('/something/', tags=[Tags.mongodb])
+def getData(data: str):
+    user = {"name": data}
+    
+    db = mongoClient['users']
+    col = db['users']
+    
+    result = col.find_one(user)
+    
+    response = {}
+    for key in result.keys():    
+        response[key] = str(result[key])
+    # return {
+    #     # 'dir': type(result.values()).__name__,
+    #     'keys': result.values().keys()
+    #     # 'value' : result.values()
+    # }
+    return response
+
+@app.get('/something/{data}', tags=[Tags.mongodb])
+def getData(data: str):
+    user = {"name": data}
+    
+    db = mongoClient['users']
+    col = db['users']
+    
+    result = col.find_one(user)
+    
+    response = {}
+    for key in result.keys():    
+        response[key] = str(result[key])
+    # return {
+    #     # 'dir': type(result.values()).__name__,
+    #     'keys': result.values().keys()
+    #     # 'value' : result.values()
+    # }
+    return response
