@@ -1,0 +1,25 @@
+version: '3.8'
+
+name: db-mike-oscar
+
+services:
+  db-mike-oscar:
+    build:
+      context: .
+      dockerfile: ./mongoDB/df_mongoDB
+    container_name: mike-oscar
+    tty: true
+    volumes:
+      - ./mongoDB/:/practica/
+      - mongodata:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - webhooklab
+
+volumes:
+  mongodata:
+
+networks:
+  webhooklab:
+    external: true

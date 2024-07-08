@@ -1,0 +1,4 @@
+FROM mongodb/mongodb-community-server:latest
+WORKDIR /
+COPY mongoDB/sentencias.js .
+COPY mongoDB/ .

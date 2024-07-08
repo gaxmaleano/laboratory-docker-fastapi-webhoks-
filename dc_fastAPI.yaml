@@ -1,0 +1,38 @@
+version: '3.8'
+
+name: api-foxtrot-alpha
+
+services:
+  api-foxtrot-alpha:
+    build:
+      context: .
+      dockerfile: ./fastAPI/df_fastAPI
+    container_name: foxtrot-alpha
+    ports:
+      - '4200:4200'
+    restart: "no"
+    volumes:
+      - ./fastAPI/app:/app
+    networks:
+      - webhooklab
+    env_file:
+      - ./fastAPI/envs/.envFastAPIApp1
+
+  api-foxtrot-beta:
+    build:
+      context: .
+      dockerfile: ./fastAPI/df_fastAPI
+    container_name: foxtrot-beta
+    ports:
+      - '4201:4201'
+    restart: "no"
+    volumes:
+      - ./fastAPI/app2:/app
+    networks:
+      - webhooklab
+    env_file:
+      - ./fastAPI/envs/.envFastAPIApp2
+
+networks:
+  webhooklab:
+    external: true
